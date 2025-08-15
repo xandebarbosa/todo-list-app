@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# To-Do List App com ReactJS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Uma aplicação simples e completa de lista de tarefas, desenvolvida com ReactJS, aplicando princípios de design de software como **Clean Architecture**, **SOLID** e **Clean Code**.
 
-## Available Scripts
+## Funcionalidades
 
-In the project directory, you can run:
+- **Adicionar Tarefa:** Crie novas tarefas a partir de um campo de texto.
+- **Editar Tarefa:** Atualize o texto de uma tarefa existente.
+- **Marcar como Concluída:** Alterne o status de uma tarefa para 'concluída' ou 'pendente'.
+- **Remover Tarefa:** Exclua uma tarefa da lista.
+- **Persistência de Dados:** As tarefas são salvas no `localStorage` do navegador e persistem mesmo após recarregar a página.
 
-### `npm start`
+### Visão Técnica: Design de Software
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+O projeto foi cuidadosamente arquitetado para ser robusto e de fácil manutenção, seguindo os seguintes princípios:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### **1. Clean Architecture**
 
-### `npm test`
+A aplicação é dividida em camadas lógicas para isolar as responsabilidades.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Camada de Apresentação (`components`):** Componentes React que se preocupam apenas com a interface (UI). Eles são "burros" e recebem dados e funções via `props`, sem saber a lógica de negócio por trás.
+- **Camada de Serviço (`services`):** Onde a lógica de negócio principal reside. `TaskService` encapsula todas as operações de gerenciamento de tarefas.
+- **Camada de Repositório (`services`):** Uma sub-camada que lida diretamente com a fonte de dados (neste caso, `localStorageRepository`). Isso permite que a camada de serviço seja agnóstica à tecnologia de persistência.
+- **Camada de Domínio (`domain`):** Um modelo de dados simples (`Task`) que representa a entidade central da aplicação, garantindo consistência.
 
-### `npm run build`
+#### **2. Princípios SOLID**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Single Responsibility Principle (SRP):** Cada arquivo/módulo tem uma única razão para mudar. `TaskService` lida com a lógica de negócio, `localStorageRepository` lida com o `localStorage`, e `TaskForm` lida com o formulário.
+- **Dependency Inversion Principle (DIP):** A camada de serviço de alto nível (`TaskService`) não depende de uma implementação de baixo nível (`localStorageRepository`). Em vez disso, ambas dependem de abstrações (o "contrato" de como salvar e obter dados). Isso facilita a substituição do `localStorage` por uma API, por exemplo, sem precisar alterar a lógica de negócio.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### **3. Clean Code**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Nomes Descritivos:** Variáveis, funções e arquivos têm nomes claros que expressam sua intenção (`handleAddTask`, `taskToEdit`, `localStorageRepository`).
+- **Funções Pequenas:** As funções são concisas e fazem uma única coisa, melhorando a legibilidade e a testabilidade.
+- **Lógica Isolada:** A lógica de negócio está completamente separada dos componentes de UI, o que torna o código mais limpo e fácil de entender.
 
-### `npm run eject`
+### Como Executar o Projeto
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Para rodar a aplicação em sua máquina local, siga os passos abaixo:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### 1. Clonar o Repositório
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+git clone [https://github.com/seu-usuario/todo-list-app.git](https://github.com/seu-usuario/todo-list-app.git)
+cd todo-list-app
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### 2. Instalar as Dependências
 
-## Learn More
+```bash
+npm install
+# ou
+yarn install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### 3. Iniciar a Aplicação
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm start
+# ou
+yarn start
+```
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+A aplicação será iniciada em modo de desenvolvimento e estará disponível em `http://localhost:3000`. O navegador abrirá automaticamente.
