@@ -40,7 +40,7 @@ Para rodar a aplicação em sua máquina local, siga os passos abaixo:
 #### 1. Clonar o Repositório
 
 ```bash
-git clone [https://github.com/xandebarbosa/todo-list-app.git]
+[https://github.com/xandebarbosa/todo-list-app.git](https://github.com/xandebarbosa/todo-list-app.git)
 cd todo-list-app
 ```
 
