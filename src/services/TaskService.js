@@ -1,4 +1,4 @@
-import { Task } from "../domain/Task";
+import { Task } from "./Task";
 import { localStorageRepository } from "./localStorageRepository";
 
 export const taskService = {
@@ -13,9 +13,9 @@ export const taskService = {
     return newTasks;
   },
 
-  updateTask: (updatedTask, tasks) => {
+  updateTask: (taskId, updatedText, tasks) => {
     const newTasks = tasks.map((task) =>
-      task.id === updatedTask.id ? updatedTask : task
+      task.id === taskId ? { ...task, text: updatedText } : task
     );
     localStorageRepository.saveTasks(newTasks);
     return newTasks;

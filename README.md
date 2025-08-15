@@ -18,14 +18,13 @@ O projeto foi cuidadosamente arquitetado para ser robusto e de fácil manutenç�
 
 A aplicação é dividida em camadas lógicas para isolar as responsabilidades.
 
-- **Camada de Apresentação (`components`):** Componentes React que se preocupam apenas com a interface (UI). Eles são "burros" e recebem dados e funções via `props`, sem saber a lógica de negócio por trás.
+- **Camada de Apresentação (`components`):** Componentes React que se preocupam apenas com a interface (UI) e a navegação. Os componentes relacionados a uma única funcionalidade, como o formulário de tarefas, são co-localizados em suas próprias pastas (`form`).
 - **Camada de Serviço (`services`):** Onde a lógica de negócio principal reside. `TaskService` encapsula todas as operações de gerenciamento de tarefas.
 - **Camada de Repositório (`services`):** Uma sub-camada que lida diretamente com a fonte de dados (neste caso, `localStorageRepository`). Isso permite que a camada de serviço seja agnóstica à tecnologia de persistência.
-- **Camada de Domínio (`domain`):** Um modelo de dados simples (`Task`) que representa a entidade central da aplicação, garantindo consistência.
 
 #### **2. Princípios SOLID**
 
-- **Single Responsibility Principle (SRP):** Cada arquivo/módulo tem uma única razão para mudar. `TaskService` lida com a lógica de negócio, `localStorageRepository` lida com o `localStorage`, e `TaskForm` lida com o formulário.
+- **Single Responsibility Principle (SRP):** Cada arquivo/módulo tem uma única razão para mudar. `TaskService` lida com a lógica de negócio, `localStorageRepository` lida com o `localStorage`, e o componente `TaskForm` (com seu hook `useTaskForm`) lida com a lógica do formulário.
 - **Dependency Inversion Principle (DIP):** A camada de serviço de alto nível (`TaskService`) não depende de uma implementação de baixo nível (`localStorageRepository`). Em vez disso, ambas dependem de abstrações (o "contrato" de como salvar e obter dados). Isso facilita a substituição do `localStorage` por uma API, por exemplo, sem precisar alterar a lógica de negócio.
 
 #### **3. Clean Code**
@@ -37,6 +36,10 @@ A aplicação é dividida em camadas lógicas para isolar as responsabilidades.
 ### Como Executar o Projeto
 
 Para rodar a aplicação em sua máquina local, siga os passos abaixo:
+
+#### Pré-requisitos
+
+Certifique-se de ter o [Node.js](https://nodejs.org/) e o [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/) instalados.
 
 #### 1. Clonar o Repositório
 

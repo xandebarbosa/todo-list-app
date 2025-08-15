@@ -1,4 +1,4 @@
-import React from "react";
+import TaskItem from "./TaskItem";
 
 const TaskList = ({ tasks, onToggleComplete, onDelete, onEdit }) => {
   return (
@@ -7,31 +7,13 @@ const TaskList = ({ tasks, onToggleComplete, onDelete, onEdit }) => {
         <p>Nenhuma tarefa adicionada ainda.</p>
       ) : (
         tasks.map((task) => (
-          <li
+          <TaskItem
             key={task.id}
-            className={`task-item ${task.completed ? "completed" : ""}`}
-          >
-            <span
-              onClick={() => onToggleComplete(task.id)}
-              className="task-text"
-            >
-              {task.text}
-            </span>
-            <div className="task-actions">
-              <button
-                onClick={() => onEdit(task)}
-                className="action-button edit-button"
-              >
-                Editar
-              </button>
-              <button
-                onClick={() => onDelete(task.id)}
-                className="action-button delete-button"
-              >
-                Remover
-              </button>
-            </div>
-          </li>
+            task={task}
+            onToggleComplete={onToggleComplete}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
         ))
       )}
     </ul>

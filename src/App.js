@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { taskService } from "./services/TaskService";
-import TaskForm from "./components/TaskForm";
+import TaskForm from "./components/form/TaskForm";
 import TaskList from "./components/TaskList";
 import "./styles/App.css";
 
@@ -8,7 +8,6 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [taskToEdit, setTaskToEdit] = useState(null);
 
-  // Carrega as tarefas do serviço na inicialização
   useEffect(() => {
     setTasks(taskService.getAllTasks());
   }, []);
@@ -18,8 +17,8 @@ const App = () => {
     setTasks(newTasks);
   };
 
-  const handleUpdateTask = (updatedTask) => {
-    const newTasks = taskService.updateTask(updatedTask, tasks);
+  const handleUpdateTask = (taskId, updatedText) => {
+    const newTasks = taskService.updateTask(taskId, updatedText, tasks);
     setTasks(newTasks);
   };
 

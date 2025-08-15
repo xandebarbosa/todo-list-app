@@ -1,29 +1,12 @@
-import React, { useState, useEffect } from "react";
+import useTaskForm from "./useTaskForm";
 
 const TaskForm = ({ onAdd, onUpdate, taskToEdit, setTaskToEdit }) => {
-  const [taskText, setTaskText] = useState("");
-
-  useEffect(() => {
-    if (taskToEdit) {
-      setTaskText(taskToEdit.text);
-    } else {
-      setTaskText("");
-    }
-  }, [taskToEdit]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!taskText.trim()) return;
-
-    if (taskToEdit) {
-      onUpdate({ ...taskToEdit, text: taskText });
-    } else {
-      onAdd(taskText);
-    }
-
-    setTaskText("");
-    setTaskToEdit(null);
-  };
+  const { taskText, setTaskText, handleSubmit } = useTaskForm({
+    onAdd,
+    onUpdate,
+    taskToEdit,
+    setTaskToEdit,
+  });
 
   return (
     <form onSubmit={handleSubmit} className="task-form">
