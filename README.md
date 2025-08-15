@@ -37,14 +37,10 @@ A aplicação é dividida em camadas lógicas para isolar as responsabilidades.
 
 Para rodar a aplicação em sua máquina local, siga os passos abaixo:
 
-#### Pré-requisitos
-
-Certifique-se de ter o [Node.js](https://nodejs.org/) e o [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/) instalados.
-
 #### 1. Clonar o Repositório
 
 ```bash
-git clone [https://github.com/seu-usuario/todo-list-app.git](https://github.com/seu-usuario/todo-list-app.git)
+git clone [https://github.com/xandebarbosa/todo-list-app.git](https://github.com/xandebarbosa/todo-list-app.git)
 cd todo-list-app
 ```
 
