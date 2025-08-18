@@ -1,37 +1,40 @@
+// src/services/TaskService.js
 import { Task } from "./Task";
-import { localStorageRepository } from "./localStorageRepository";
 
-export const taskService = {
-  getAllTasks: () => {
-    return localStorageRepository.getTasks();
-  },
+export class TaskService {
+  constructor(repository) {
+    this.repository = repository;
+  }
 
-  addTask: (text, tasks) => {
-    const newTask = new Task(text);
-    const newTasks = [...tasks, newTask];
-    localStorageRepository.saveTasks(newTasks);
-    return newTasks;
-  },
+  getTasks() {
+    return this.repository.getTasks();
+  }
 
-  updateTask: (taskId, updatedText, tasks) => {
-    const newTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, text: updatedText } : task
-    );
-    localStorageRepository.saveTasks(newTasks);
-    return newTasks;
-  },
+  addTask(title) {
+    const newTask = new Task(title);
+    this.repository.addTask(newTask);
+    return newTask;
+  }
 
-  deleteTask: (taskId, tasks) => {
-    const newTasks = tasks.filter((task) => task.id !== taskId);
-    localStorageRepository.saveTasks(newTasks);
-    return newTasks;
-  },
+  updateTask(taskId, newTitle) {
+    const tasks = this.repository.getTasks();
+    const taskToUpdate = tasks.find((task) => task.id === taskId);
+    if (taskToUpdate) {
+      taskToUpdate.title = newTitle;
+      this.repository.updateTask(taskToUpdate);
+    }
+  }
 
-  toggleComplete: (taskId, tasks) => {
-    const newTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, completed: !task.completed } : task
-    );
-    localStorageRepository.saveTasks(newTasks);
-    return newTasks;
-  },
-};
+  deleteTask(taskId) {
+    this.repository.deleteTask(taskId);
+  }
+
+  toggleTaskCompleted(taskId) {
+    const tasks = this.repository.getTasks();
+    const taskToToggle = tasks.find((task) => task.id === taskId);
+    if (taskToToggle) {
+      taskToToggle.completed = !taskToToggle.completed;
+      this.repository.updateTask(taskToToggle);
+    }
+  }
+}

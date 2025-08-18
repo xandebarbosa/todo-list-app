@@ -1,63 +1,76 @@
-# To-Do List App com ReactJS
+# 📝 To-Do List App (Lista de Tarefas)
 
-Uma aplicação simples e completa de lista de tarefas, desenvolvida com ReactJS, aplicando princípios de design de software como **Clean Architecture**, **SOLID** e **Clean Code**.
+Este é um projeto de uma aplicação de lista de tarefas (`To-Do List`) desenvolvido em **React**.  
+O objetivo é demonstrar a aplicação de princípios de arquitetura de software limpa e padrões de projeto modernos, como **Clean Architecture** e **SOLID**, em um ambiente de front-end.
 
-## Funcionalidades
+A aplicação permite que o usuário adicione, visualize, atualize, marque como concluída e exclua tarefas, com os dados persistindo no `localStorage` do navegador.
 
-- **Adicionar Tarefa:** Crie novas tarefas a partir de um campo de texto.
-- **Editar Tarefa:** Atualize o texto de uma tarefa existente.
-- **Marcar como Concluída:** Alterne o status de uma tarefa para 'concluída' ou 'pendente'.
-- **Remover Tarefa:** Exclua uma tarefa da lista.
-- **Persistência de Dados:** As tarefas são salvas no `localStorage` do navegador e persistem mesmo após recarregar a página.
+---
 
-### Visão Técnica: Design de Software
+## ⚙️ Visão Técnica e Padrões de Projeto
 
-O projeto foi cuidadosamente arquitetado para ser robusto e de fácil manutenção, seguindo os seguintes princípios:
+O projeto foi estruturado para ser **escalável, manutenível e testável**, seguindo uma arquitetura de camadas bem definida.
 
-#### **1. Clean Architecture**
+### 🔹 Clean Architecture
 
-A aplicação é dividida em camadas lógicas para isolar as responsabilidades.
+A aplicação é dividida em camadas de responsabilidade, com uma regra clara de dependência: as camadas externas dependem das internas, mas nunca o contrário.
 
-- **Camada de Apresentação (`components`):** Componentes React que se preocupam apenas com a interface (UI) e a navegação. Os componentes relacionados a uma única funcionalidade, como o formulário de tarefas, são co-localizados em suas próprias pastas (`form`).
-- **Camada de Serviço (`services`):** Onde a lógica de negócio principal reside. `TaskService` encapsula todas as operações de gerenciamento de tarefas.
-- **Camada de Repositório (`services`):** Uma sub-camada que lida diretamente com a fonte de dados (neste caso, `localStorageRepository`). Isso permite que a camada de serviço seja agnóstica à tecnologia de persistência.
+- **`src/pages` (Apresentação):** Representa as telas da aplicação (ex: `HomePage`). É responsável por compor os componentes de UI.
+- **`src/components` (Apresentação):** Contém os componentes de UI reutilizáveis, como `TaskForm`, `TaskList` e `TaskItem`. Não possuem lógica de negócio.
+- **`src/contexts` (Gerenciamento de Estado):** Centraliza o estado e a lógica de negócio. O `TaskContext.js` gerencia a lista de tarefas, orquestrando chamadas aos serviços.
+- **`src/hooks` (Acesso ao Estado):** Hooks customizados (`useTasks`) que servem como ponte entre os componentes de UI e o `TaskContext`.
+- **`src/services` (Dados):** Abstrai as fontes de dados. `TaskService.js` define operações de negócio, enquanto `localStorageRepository.js` lida com persistência no `localStorage`.
 
-#### **2. Princípios SOLID**
+---
 
-- **Single Responsibility Principle (SRP):** Cada arquivo/módulo tem uma única razão para mudar. `TaskService` lida com a lógica de negócio, `localStorageRepository` lida com o `localStorage`, e o componente `TaskForm` (com seu hook `useTaskForm`) lida com a lógica do formulário.
-- **Dependency Inversion Principle (DIP):** A camada de serviço de alto nível (`TaskService`) não depende de uma implementação de baixo nível (`localStorageRepository`). Em vez disso, ambas dependem de abstrações (o "contrato" de como salvar e obter dados). Isso facilita a substituição do `localStorage` por uma API, por exemplo, sem precisar alterar a lógica de negócio.
+### 🔹 SOLID
 
-#### **3. Clean Code**
+1. **S - Responsabilidade Única:** Cada módulo tem um propósito único.
 
-- **Nomes Descritivos:** Variáveis, funções e arquivos têm nomes claros que expressam sua intenção (`handleAddTask`, `taskToEdit`, `localStorageRepository`).
-- **Funções Pequenas:** As funções são concisas e fazem uma única coisa, melhorando a legibilidade e a testabilidade.
-- **Lógica Isolada:** A lógica de negócio está completamente separada dos componentes de UI, o que torna o código mais limpo e fácil de entender.
+   - Exemplo: `TaskItem` apenas exibe uma tarefa; `TaskContext` gerencia o estado.
 
-### Como Executar o Projeto
+2. **O - Aberto/Fechado:** Aberto a extensões, fechado para modificações.
 
-Para rodar a aplicação em sua máquina local, siga os passos abaixo:
+   - Exemplo: trocar `localStorage` por API exigiria apenas criar `apiRepository.js` e injetá-lo no `TaskService`.
 
-#### 1. Clonar o Repositório
+3. **D - Inversão de Dependência:** A UI não depende de implementações concretas.
+   - Exemplo: `TaskItem` usa o hook `useTasks` para interagir com o contexto, sem chamar o `TaskService` diretamente.
+
+---
+
+### 🔹 Clean Code
+
+- **Nomes claros:** Funções e variáveis como `toggleTask`, `addTask`.
+- **Componentes pequenos:** Cada um com uma única responsabilidade.
+- **Caminhos absolutos:** Configurados via `jsconfig.json` para simplificar imports.
+
+---
+
+## 🚀 Como Executar o Projeto
+
+### ✅ Pré-requisitos
+
+- [Node.js](https://nodejs.org/) (v14 ou superior)
+- `npm` ou `yarn`
+
+### 🔹 1. Clonar o Repositório
 
 ```bash
-git clone [https://github.com/xandebarbosa/todo-list-app.git](https://github.com/xandebarbosa/todo-list-app.git)
+git clone https://github.com/xandebarbosa/todo-list-app.git
 cd todo-list-app
 ```
 
-#### 2. Instalar as Dependências
+### 🔹 2. Instalar as Dependências
 
 ```bash
 npm install
-# ou
-yarn install
 ```
 
-#### 3. Iniciar a Aplicação
+### 🔹 3. Executar a Aplicação
 
 ```bash
 npm start
-# ou
-yarn start
 ```
 
-A aplicação será iniciada em modo de desenvolvimento e estará disponível em `http://localhost:3000`. O navegador abrirá automaticamente.
+A aplicação será aberta automaticamente em:  
+👉 [http://localhost:3000](http://localhost:3000)
