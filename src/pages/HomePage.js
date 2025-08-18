@@ -11,6 +11,10 @@ const HomePage = () => {
         Clique na tarefa para marcar como concluída
       </p>
       <TaskList />
+
+      <div style={{ marginTop: "40px", borderTop: "1px solid #ccc" }}>
+        <h5>Desenvolvido por Alexandre dos Santos Barbosa - 2025</h5>
+      </div>
     </div>
   );
 };
